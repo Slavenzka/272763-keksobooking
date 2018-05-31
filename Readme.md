@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Иван Романов](https://up.htmlacademy.ru/javascript/14/user/272763).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Батогов](https://htmlacademy.ru/profile/batogov).
 
 ---
 
