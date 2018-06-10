@@ -111,8 +111,8 @@ var fillTickets = function (quantity, ticketArray, textDesctiptionArray, feature
         'checkin': textDesctiptionArray[indexes[i] - 1]['checkin'],
         'checkout': textDesctiptionArray[indexes[i] - 1]['checkout'],
         'features': shuffleArray(features),
-//        'features': shuffleArray(FEATURES_LIST).slice(0, Math.round(Math.random() * (FEATURES_LIST.length + 1))),
-        'description': "",
+        //        'features': shuffleArray(FEATURES_LIST).slice(0, Math.round(Math.random() * (FEATURES_LIST.length + 1))),
+        'description': '',
         'photos': shuffleArray(photos)
       },
       'location': {
@@ -120,8 +120,8 @@ var fillTickets = function (quantity, ticketArray, textDesctiptionArray, feature
         'y': y
       }
     };
-//    console.log(ticketArray[i].author);
-    console.log(ticketArray[i].offer.features);
+    //    console.log(ticketArray[i].author);
+    //    console.log(ticketArray[i].offer.features);
   }
 
   return ticketArray;
@@ -135,7 +135,7 @@ var pinList = document.querySelector('.map__pins');
 var templateCard = document.querySelector('#map-card-template').content.querySelector('.map__card');
 var fragmentCard = document.createDocumentFragment();
 
-console.log(tickets);
+//console.log(tickets);
 
 var renderPin = function (ticketsArray, index) {
   var element = templatePin.cloneNode(true);
@@ -158,13 +158,13 @@ var renderCard = function (ticketsArray, index) {
   element.querySelector('.popup__text--price').textContent = ticketsArray[index].offer.price + '₽/ночь';
 
   if (ticketsArray[index].offer.type === 'flat') {
-      element.querySelector('.popup__type').textContent = 'Квартира';
+    element.querySelector('.popup__type').textContent = 'Квартира';
   } else if (ticketsArray[index].offer.type === 'palace') {
-      element.querySelector('.popup__type').textContent = 'Дворец';
+    element.querySelector('.popup__type').textContent = 'Дворец';
   } else if (ticketsArray[index].offer.type === 'house') {
-      element.querySelector('.popup__type').textContent = 'Дом';
+    element.querySelector('.popup__type').textContent = 'Дом';
   } else if (ticketsArray[index].offer.type === 'bungalo') {
-      element.querySelector('.popup__type').textContent = 'Бунгало';
+    element.querySelector('.popup__type').textContent = 'Бунгало';
   }
 
   return element;
