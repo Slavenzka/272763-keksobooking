@@ -135,7 +135,7 @@ var pinList = document.querySelector('.map__pins');
 var templateCard = document.querySelector('#map-card-template').content.querySelector('.map__card');
 var fragmentCard = document.createDocumentFragment();
 
-//console.log(tickets);
+//  console.log(tickets);
 
 var renderPin = function (ticketsArray, index) {
   var element = templatePin.cloneNode(true);
