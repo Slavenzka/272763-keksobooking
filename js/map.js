@@ -50,7 +50,7 @@ var getRandomNumber = function (minNumber, maxNumber) {
 
 var fillTickets = function (quantity, ticketArray, textDesctiptionArray, offerType, checkins, checkouts, features, photos) {
   var indexes = fillArray(indexArray, quantityTickets);
-  var indexes = shuffleArray(indexes);
+  indexes = shuffleArray(indexes);
 
   for (var i = 0; i < quantity; i++) {
     var x = getRandomNumber(300, 900);
@@ -146,7 +146,7 @@ var renderCard = function (ticketsArray, index) {
 
   element.querySelector('.popup__description').textContent = ticketsArray[index].offer.description;
 
-  for (var i = 0; i < ticketsArray[index].offer.photos.length; i++) {
+  for (i = 0; i < ticketsArray[index].offer.photos.length; i++) {
     var elementPhoto = element.querySelector('.popup__photo').cloneNode();
 
     elementPhoto.src = ticketsArray[index].offer.photos[i];
