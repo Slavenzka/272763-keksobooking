@@ -25,22 +25,16 @@ var fillArray = function (targetArray, quantity) {
   return targetArray;
 };
 
-
-var shuffleArray = function (targetArray) {
-  var copyArray = targetArray.slice();
-
-  for (var i = copyArray.length - 1; i >= 0; i--) {
-
-    var j = Math.floor(Math.random() * (i + 1));
-
-    var temp = copyArray[i];
-    copyArray[i] = copyArray[j];
-    copyArray[j] = temp;
-  }
-
-  return copyArray;
+var compareFunctionShuffle = function (a, b) {
+  return Math.random() - 0.5;
 };
 
+
+var shuffleArray = function (targetArray) {
+  var copiedArray = targetArray.slice();
+
+  return copiedArray.sort(compareFunctionShuffle);
+};
 
 var getRandomNumber = function (minNumber, maxNumber) {
 
@@ -51,6 +45,7 @@ var getRandomNumber = function (minNumber, maxNumber) {
 var fillTickets = function (quantity, ticketArray, textDesctiptionArray, offerType, checkins, checkouts, features, photos) {
   var indexes = fillArray(indexArray, quantityTickets);
   indexes = shuffleArray(indexes);
+  var titlesShuffled = shuffleArray(textDesctiptionArray);
 
   for (var i = 0; i < quantity; i++) {
     var x = getRandomNumber(300, 900);
@@ -62,14 +57,14 @@ var fillTickets = function (quantity, ticketArray, textDesctiptionArray, offerTy
         'avatar': 'img/avatars/user0' + indexes[i].toString() + '.png'
       },
       'offer': {
-        'title': shuffleArray(textDesctiptionArray)[i],
+        'title': titlesShuffled[i],
         'address': x.toString() + ', ' + y.toString(),
         'price': getRandomNumber(1000, 1000000),
-        'type': shuffleArray(offerType)[i],
+        'type': offerType[Math.floor(Math.random() * offerType.length)],
         'rooms': getRandomNumber(1, 5),
         'guests': getRandomNumber(1, 10),
-        'checkin': shuffleArray(checkins)[i],
-        'checkout': shuffleArray(checkouts)[i],
+        'checkin': checkins[Math.floor(Math.random() * checkins.length)],
+        'checkout': checkouts[Math.floor(Math.random() * checkouts.length)],
         'features': featuresShuffled.slice(0, Math.floor(1 + Math.random() * (features.length))),
         'description': '',
         'photos': shuffleArray(photos)
@@ -92,11 +87,10 @@ var pinList = document.querySelector('.map__pins');
 var templateCard = document.querySelector('#map-card-template').content.querySelector('.map__card');
 var fragmentCard = document.createDocumentFragment();
 
-
 var renderPin = function (ticketsArray, index) {
   var element = templatePin.cloneNode(true);
-  var pinX = ticketsArray[index].location.x + 25;
-  var pinY = ticketsArray[index].location.y + 70;
+  var pinX = ticketsArray[index].location.x;
+  var pinY = ticketsArray[index].location.y;
 
   element.style = 'left: ' + pinX + 'px; top: ' + pinY + 'px;';
   element.querySelector('img').src = ticketsArray[index].author.avatar;
