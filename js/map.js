@@ -60,12 +60,12 @@ var fillTickets = function (quantity, ticketArray, textDesctiptionArray, offerTy
         'title': titlesShuffled[i],
         'address': x.toString() + ', ' + y.toString(),
         'price': getRandomNumber(1000, 1000000),
-        'type': offerType[Math.floor(Math.random() * offerType.length)],
+        'type': offerType[getRandomNumber(0, offerType.length - 1)],
         'rooms': getRandomNumber(1, 5),
         'guests': getRandomNumber(1, 10),
-        'checkin': checkins[Math.floor(Math.random() * checkins.length)],
-        'checkout': checkouts[Math.floor(Math.random() * checkouts.length)],
-        'features': featuresShuffled.slice(0, Math.floor(1 + Math.random() * (features.length))),
+        'checkin': checkins[getRandomNumber(0, checkins.length - 1)],
+        'checkout': checkouts[getRandomNumber(0, checkouts.length - 1)],
+        'features': featuresShuffled.slice(0, getRandomNumber(0, features.length - 1) + 1),
         'description': '',
         'photos': shuffleArray(photos)
       },
@@ -89,8 +89,8 @@ var fragmentCard = document.createDocumentFragment();
 
 var renderPin = function (ticketsArray, index) {
   var element = templatePin.cloneNode(true);
-  var pinX = ticketsArray[index].location.x;
-  var pinY = ticketsArray[index].location.y;
+  var pinX = ticketsArray[index].location.x - 25;
+  var pinY = ticketsArray[index].location.y - 70;
 
   element.style = 'left: ' + pinX + 'px; top: ' + pinY + 'px;';
   element.querySelector('img').src = ticketsArray[index].author.avatar;
