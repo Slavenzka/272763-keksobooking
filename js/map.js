@@ -25,7 +25,7 @@ var fillArray = function (targetArray, quantity) {
   return targetArray;
 };
 
-var compareFunctionShuffle = function (a, b) {
+var compareFunctionShuffle = function () {
   return Math.random() - 0.5;
 };
 
