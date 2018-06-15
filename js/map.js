@@ -154,8 +154,8 @@ var renderCard = function (ticketsArray, index) {
 };
 
 
-//fragmentCard.appendChild(renderCard(tickets, 0));
-//map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
+//  fragmentCard.appendChild(renderCard(tickets, 0));
+//  map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
 
 
 //  Деактивация элементов формы в изначальном состоянии
@@ -164,14 +164,14 @@ var formContent = document.querySelector('.ad-form');
 var formElementList = formContent.querySelectorAll('fieldset');
 
 var disableFormElements = function (targetCollection) {
-  for (var i = 0; i < formElementList.length; i++) {
-    formElementList[i].disabled = 'disabled';
+  for (var i = 0; i < targetCollection.length; i++) {
+    targetCollection[i].disabled = 'disabled';
   }
 };
 
 var enableFormElements = function (targetCollection) {
   for (var i = 0; i < formElementList.length; i++) {
-    formElementList[i].disabled = '';
+    targetCollection[i].disabled = '';
   }
 };
 
@@ -196,7 +196,7 @@ var MAIN_PIN_SIZE_WIDTH = 65;
 var MAIN_PIN_SIZE_HEIGHT = 65 + 22;
 
 var updateMainPinCoordinates = function (coordinateXBefore, coordinateYBefore, targetInput) {
-  var coordinateXAfter = Math.round(coordinateXBefore - MAIN_PIN_SIZE_WIDTH /2);
+  var coordinateXAfter = Math.round(coordinateXBefore - MAIN_PIN_SIZE_WIDTH / 2);
   var coordinateYAfter = Math.round(coordinateYBefore - MAIN_PIN_SIZE_HEIGHT);
 
   targetInput.value = coordinateXAfter.toString() + ', ' + coordinateYAfter.toString();
@@ -226,7 +226,6 @@ var eraseExistingCard = function () {
 //  Активация страницы
 
 var mainPin = document.querySelector('.map__pin--main');
-var regularPin = pinList.querySelectorAll('button');
 
 var enablePage = function () {
   map.classList.remove('map--faded');
@@ -270,8 +269,6 @@ var pinClickHandler = function () {
     });
   }
 };
-
-
 
 
 mainPin.addEventListener('mouseup', function () {
