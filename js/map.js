@@ -154,10 +154,6 @@ var renderCard = function (ticketsArray, index) {
 };
 
 
-//  fragmentCard.appendChild(renderCard(tickets, 0));
-//  map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
-
-
 //  Деактивация элементов формы в изначальном состоянии
 
 var formContent = document.querySelector('.ad-form');
@@ -170,7 +166,7 @@ var disableFormElements = function (targetCollection) {
 };
 
 var enableFormElements = function (targetCollection) {
-  for (var i = 0; i < formElementList.length; i++) {
+  for (var i = 0; i < targetCollection.length; i++) {
     targetCollection[i].disabled = '';
   }
 };
@@ -256,7 +252,7 @@ var closeCardPopup = function () {
 // Обработка клика на пин
 
 var pinClickHandler = function () {
-  var renderedPinList = pinList.querySelectorAll('.map__pin:not(:first-of-type)');
+  var renderedPinList = pinList.querySelectorAll('.map__pin:not(.map__pin--main)');
 
   for (var i = 0; i < renderedPinList.length; i++) {
     renderedPinList[i].addEventListener('click', function (evt) {
