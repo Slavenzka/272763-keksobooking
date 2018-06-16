@@ -12,7 +12,6 @@ var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'con
 
 var FOTOS_LIST = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-
 var arrayTickets = [];
 var indexArray = [];
 var quantityTickets = 8;
@@ -85,7 +84,7 @@ var templatePin = document.querySelector('#map-card-template').content.querySele
 var fragmentPin = document.createDocumentFragment();
 var pinList = document.querySelector('.map__pins');
 var templateCard = document.querySelector('#map-card-template').content.querySelector('.map__card');
-var fragmentCard = document.createDocumentFragment();
+
 
 var renderPin = function (ticketsArray, index) {
   var element = templatePin.cloneNode(true);
@@ -93,6 +92,7 @@ var renderPin = function (ticketsArray, index) {
   var pinY = ticketsArray[index].location.y - 70;
 
   element.style = 'left: ' + pinX + 'px; top: ' + pinY + 'px;';
+  element.dataset.id = index.toString();
   element.querySelector('img').src = ticketsArray[index].author.avatar;
   element.querySelector('img').alt = ticketsArray[index].offer.title;
 
@@ -153,15 +153,125 @@ var renderCard = function (ticketsArray, index) {
   return element;
 };
 
-for (var i = 0; i < quantityTickets; i++) {
-  fragmentPin.appendChild(renderPin(tickets, i));
-}
 
-pinList.appendChild(fragmentPin);
+//  Деактивация элементов формы в изначальном состоянии
 
-fragmentCard.appendChild(renderCard(tickets, 0));
-map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
+var formContent = document.querySelector('.ad-form');
+var formElementList = formContent.querySelectorAll('fieldset');
 
-map.classList.remove('map--faded');
+var disableFormElements = function (targetCollection) {
+  for (var i = 0; i < targetCollection.length; i++) {
+    targetCollection[i].disabled = 'disabled';
+  }
+};
+
+var enableFormElements = function (targetCollection) {
+  for (var i = 0; i < targetCollection.length; i++) {
+    targetCollection[i].disabled = '';
+  }
+};
+
+disableFormElements(formElementList);
+
+// Прописываю координаты метки на неактивной странице
+
+var DEFAULT_PIN_X = 570;
+var DEFAULT_PIN_Y = 375;
+var DEFAULT_PIN_DIAMETER = 65;
+
+var defaultPinCenterX = Math.round(DEFAULT_PIN_X + DEFAULT_PIN_DIAMETER / 2);
+var defaultPinCenterY = Math.round(DEFAULT_PIN_Y + DEFAULT_PIN_DIAMETER / 2);
+
+var addressInput = formContent.querySelector('#address');
+
+addressInput.value = defaultPinCenterX.toString() + ', ' + defaultPinCenterY.toString();
+
+//  Метод для отражения текущих координат метки на активной странице
+
+var MAIN_PIN_SIZE_WIDTH = 65;
+var MAIN_PIN_SIZE_HEIGHT = 65 + 22;
+
+var updateMainPinCoordinates = function (coordinateXBefore, coordinateYBefore, targetInput) {
+  var coordinateXAfter = Math.round(coordinateXBefore - MAIN_PIN_SIZE_WIDTH / 2);
+  var coordinateYAfter = Math.round(coordinateYBefore - MAIN_PIN_SIZE_HEIGHT);
+
+  targetInput.value = coordinateXAfter.toString() + ', ' + coordinateYAfter.toString();
+
+};
+
+// Метод для отрисовки карточки предложения по клику на соответствующий пин
+
+var pinClickCardRenderer = function (ticketArray, index) {
+  var fragmentCard = document.createDocumentFragment();
+
+  fragmentCard.appendChild(renderCard(ticketArray, index));
+  map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
+};
+
+// Удаляем ранее созданную карточку, если таковая существует
+
+var eraseExistingCard = function () {
+
+  var previousCard = map.querySelector('.map__card');
+
+  if (!(previousCard === null)) {
+    map.removeChild(previousCard);
+  }
+};
+
+//  Активация страницы
+
+var mainPin = document.querySelector('.map__pin--main');
+
+var enablePage = function () {
+  map.classList.remove('map--faded');
+
+  enableFormElements(formElementList);
+
+  formContent.classList.remove('ad-form--disabled');
+
+  updateMainPinCoordinates(DEFAULT_PIN_X, DEFAULT_PIN_Y, addressInput);
+
+  for (var i = 0; i < quantityTickets; i++) {
+    fragmentPin.appendChild(renderPin(tickets, i));
+  }
+
+  pinList.appendChild(fragmentPin);
+};
+
+//  Закрытие карточки с описанием
+
+var closeCardPopup = function () {
+  var cardCloseButton = map.querySelector('.popup__close');
+
+  cardCloseButton.addEventListener('click', function () {
+    eraseExistingCard();
+  });
+};
+
+// Обработка клика на пин
+
+var pinClickHandler = function () {
+  var renderedPinList = pinList.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+  for (var i = 0; i < renderedPinList.length; i++) {
+    renderedPinList[i].addEventListener('click', function (evt) {
+
+      eraseExistingCard();
+
+      pinClickCardRenderer(tickets, evt.currentTarget.dataset.id);
+
+      closeCardPopup();
+    });
+  }
+};
+
+
+mainPin.addEventListener('mouseup', function () {
+
+  enablePage();
+  pinClickHandler();
+
+});
 
 
