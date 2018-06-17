@@ -274,4 +274,25 @@ mainPin.addEventListener('mouseup', function () {
 
 });
 
+//  Проверка равенства введенного количества комнат количеству гостей
 
+var roomsQtySelect = formContent.querySelector('#room_number');
+var capacitySelect = formContent.querySelector('#capacity');
+
+var roomsOptions = roomsQtySelect.querySelectorAll('option');
+var capacityOptions = capacitySelect.querySelectorAll('option');
+
+var checkSelectionEquality = function (selectRooms, optionsCollectionRooms, selectCapacity, optionsCollectionCapacity) {
+
+  if (optionsCollectionRooms[selectRooms.options.selectedIndex].value !== optionsCollectionCapacity[selectCapacity.options.selectedIndex].value) {
+
+    selectCapacity.setCustomValidity('Количество гостей не совпадает с количеством комнат!');
+  } else {
+    selectCapacity.setCustomValidity('');
+  }
+
+};
+
+capacitySelect.addEventListener('change', function () {
+  checkSelectionEquality(roomsQtySelect, roomsOptions, capacitySelect, capacityOptions);
+});
