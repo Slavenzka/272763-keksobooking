@@ -311,7 +311,6 @@ var MIN_PRICE_PALACE = 10000;
 var checkMinPrice = function (optionsCollection, typeSelection, inputPrice) {
 
   if (optionsCollection[typeSelection.options.selectedIndex].value === 'flat') {
-    console.log('Выбрана квартира');
     priceInput.min = MIN_PRICE_FLAT;
     priceInput.placeholder = priceInput.min;
 
@@ -319,29 +318,26 @@ var checkMinPrice = function (optionsCollection, typeSelection, inputPrice) {
       inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды квартир (' + inputPrice.min + ' руб.)');
     }
   } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'bungalo') {
-      console.log('Выбрано бунгало');
-      inputPrice.min = MIN_PRICE_BUNGALO;
-      inputPrice.placeholder = inputPrice.min;
+    inputPrice.min = MIN_PRICE_BUNGALO;
+    inputPrice.placeholder = inputPrice.min;
 
-      if (inputPrice.value < inputPrice.min) {
-        inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды бунгало (' + inputPrice.min + ' руб.)');
-      }
+    if (inputPrice.value < inputPrice.min) {
+      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды бунгало (' + inputPrice.min + ' руб.)');
+    }
   } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'house') {
-      console.log('Выбран дом');
-      inputPrice.min = MIN_PRICE_HOUSE;
-      inputPrice.placeholder = inputPrice.min;
+    inputPrice.min = MIN_PRICE_HOUSE;
+    inputPrice.placeholder = inputPrice.min;
 
-      if (inputPrice.value < inputPrice.min) {
-        inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды дома (' + inputPrice.min + ' руб.)');
-      }
+    if (inputPrice.value < inputPrice.min) {
+      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды дома (' + inputPrice.min + ' руб.)');
+    }
   } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'palace') {
-      console.log('Выбран дворец');
-      inputPrice.min = MIN_PRICE_PALACE;
-      inputPrice.placeholder = inputPrice.min;
+    inputPrice.min = MIN_PRICE_PALACE;
+    inputPrice.placeholder = inputPrice.min;
 
-      if (priceInput.value < priceInput.min) {
-        inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды дворца (' + inputPrice.min + ' руб.)');
-      }
+    if (priceInput.value < priceInput.min) {
+      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды дворца (' + inputPrice.min + ' руб.)');
+    }
   }
 };
 
