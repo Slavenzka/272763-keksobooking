@@ -308,46 +308,34 @@ var MIN_PRICE_BUNGALO = 0;
 var MIN_PRICE_HOUSE = 5000;
 var MIN_PRICE_PALACE = 10000;
 
+var modifyMinPrice = function (input, minPrice) {
+  input.min = minPrice;
+  input.placeholder = input.min;
+};
+
 var checkMinPrice = function (optionsCollection, typeSelection, inputPrice) {
 
   if (optionsCollection[typeSelection.options.selectedIndex].value === 'flat') {
-    priceInput.min = MIN_PRICE_FLAT;
-    priceInput.placeholder = priceInput.min;
 
-    if (inputPrice.value < inputPrice.min) {
-      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды квартир (' + inputPrice.min + ' руб.)');
-    }
+    modifyMinPrice(priceInput, MIN_PRICE_FLAT);
+
   } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'bungalo') {
-    inputPrice.min = MIN_PRICE_BUNGALO;
-    inputPrice.placeholder = inputPrice.min;
 
-    if (inputPrice.value < inputPrice.min) {
-      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды бунгало (' + inputPrice.min + ' руб.)');
-    }
+    modifyMinPrice(priceInput, MIN_PRICE_BUNGALO);
+
   } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'house') {
-    inputPrice.min = MIN_PRICE_HOUSE;
-    inputPrice.placeholder = inputPrice.min;
 
-    if (inputPrice.value < inputPrice.min) {
-      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды дома (' + inputPrice.min + ' руб.)');
-    }
+    modifyMinPrice(priceInput, MIN_PRICE_HOUSE);
+
   } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'palace') {
-    inputPrice.min = MIN_PRICE_PALACE;
-    inputPrice.placeholder = inputPrice.min;
 
-    if (priceInput.value < priceInput.min) {
-      inputPrice.setCustomValidity('Введена цена ниже предельно допустимой для аренды дворца (' + inputPrice.min + ' руб.)');
-    }
+    modifyMinPrice(priceInput, MIN_PRICE_PALACE);
+
   }
 };
 
 // Проверка цены для дефолтного значения типа жилья для единообразия сообщения об ошибке
-if (priceInput.value < priceInput.min) {
-  priceInput.setCustomValidity('Введена цена ниже предельно допустимой для аренды бунгало (' + priceInput.min + ' руб.)');
-}
-
 
 typeSelect.addEventListener('change', function () {
-
   checkMinPrice(typeOptions, typeSelect, priceInput);
 });
