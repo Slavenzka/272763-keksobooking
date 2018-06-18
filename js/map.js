@@ -313,7 +313,7 @@ var modifyMinPrice = function (input, minPrice) {
   input.placeholder = input.min;
 };
 
-var checkMinPrice = function (optionsCollection, typeSelection, inputPrice) {
+var checkMinPrice = function (optionsCollection, typeSelection) {
 
   if (optionsCollection[typeSelection.options.selectedIndex].value === 'flat') {
 
