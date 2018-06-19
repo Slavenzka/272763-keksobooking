@@ -340,7 +340,6 @@ typeSelect.addEventListener('change', function () {
 });
 
 // Реализация drag & drop для элемента .map__pin--main
-var mainPin = document.querySelector('.map__pin--main');
 
 mainPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
@@ -349,8 +348,6 @@ mainPin.addEventListener('mousedown', function (evt) {
     x: evt.clientX,
     y: evt.clientY
   };
-
-  var dragged = false;
 
   var calculatePinCoords = function (evtType) {
 
@@ -379,7 +376,7 @@ mainPin.addEventListener('mousedown', function (evt) {
       actualPositionY = limitCoords.Ymin;
     }
 
-     if (actualPositionY > limitCoords.Ymax) {
+    if (actualPositionY > limitCoords.Ymax) {
       actualPositionY = limitCoords.Ymax;
     }
 
@@ -394,7 +391,6 @@ mainPin.addEventListener('mousedown', function (evt) {
 
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
-    dragged = true;
 
     calculatePinCoords(moveEvt);
 
@@ -413,7 +409,7 @@ mainPin.addEventListener('mousedown', function (evt) {
     document.removeEventListener('mouseup', onMouseUp);
   };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 
 });
