@@ -12,6 +12,13 @@ var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'con
 
 var FOTOS_LIST = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
+var limitCoords = {
+  Xmin: 300,
+  Xmax: 900,
+  Ymin: 130,
+  Ymax: 630
+};
+
 var arrayTickets = [];
 var indexArray = [];
 var quantityTickets = 8;
@@ -47,8 +54,8 @@ var fillTickets = function (quantity, ticketArray, textDesctiptionArray, offerTy
   var titlesShuffled = shuffleArray(textDesctiptionArray);
 
   for (var i = 0; i < quantity; i++) {
-    var x = getRandomNumber(300, 900);
-    var y = getRandomNumber(130, 630);
+    var x = getRandomNumber(limitCoords.Xmin, limitCoords.Xmax);
+    var y = getRandomNumber(limitCoords.Ymin, limitCoords.Ymax);
     var featuresShuffled = shuffleArray(features);
 
     ticketArray[i] = {
@@ -192,8 +199,8 @@ var MAIN_PIN_SIZE_WIDTH = 65;
 var MAIN_PIN_SIZE_HEIGHT = 65 + 22;
 
 var updateMainPinCoordinates = function (coordinateXBefore, coordinateYBefore, targetInput) {
-  var coordinateXAfter = Math.round(coordinateXBefore - MAIN_PIN_SIZE_WIDTH / 2);
-  var coordinateYAfter = Math.round(coordinateYBefore - MAIN_PIN_SIZE_HEIGHT);
+  var coordinateXAfter = Math.round(coordinateXBefore + MAIN_PIN_SIZE_WIDTH / 2);
+  var coordinateYAfter = Math.round(coordinateYBefore + MAIN_PIN_SIZE_HEIGHT);
 
   targetInput.value = coordinateXAfter.toString() + ', ' + coordinateYAfter.toString();
 
@@ -266,14 +273,6 @@ var pinClickHandler = function () {
   }
 };
 
-
-mainPin.addEventListener('mouseup', function () {
-
-  enablePage();
-  pinClickHandler();
-
-});
-
 //  Проверка равенства введенного количества комнат количеству гостей
 
 var roomsQtySelect = formContent.querySelector('#room_number');
@@ -338,4 +337,83 @@ var checkMinPrice = function (optionsCollection, typeSelection) {
 
 typeSelect.addEventListener('change', function () {
   checkMinPrice(typeOptions, typeSelect, priceInput);
+});
+
+// Реализация drag & drop для элемента .map__pin--main
+var mainPin = document.querySelector('.map__pin--main');
+
+mainPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var dragged = false;
+
+  var calculatePinCoords = function (evtType) {
+
+    var shift = {
+      x: startCoords.x - evtType.clientX,
+      y: startCoords.y - evtType.clientY
+    };
+
+    startCoords = {
+      x: evtType.clientX,
+      y: evtType.clientY
+    };
+
+    var actualPositionY = mainPin.offsetTop - shift.y;
+    var actualPositionX = mainPin.offsetLeft - shift.x;
+
+    if (actualPositionX < 0) {
+      actualPositionX = 0;
+    }
+
+    if (actualPositionX > 1135) {
+      actualPositionX = 1135;
+    }
+
+    if (actualPositionY < limitCoords.Ymin) {
+      actualPositionY = limitCoords.Ymin;
+    }
+
+     if (actualPositionY > limitCoords.Ymax) {
+      actualPositionY = limitCoords.Ymax;
+    }
+
+    updateMainPinCoordinates(actualPositionX, actualPositionY, addressInput);
+
+    window.actualPosition = {
+      x: actualPositionX,
+      y: actualPositionY
+    };
+
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    dragged = true;
+
+    calculatePinCoords(moveEvt);
+
+    mainPin.style.top = window.actualPosition.y + 'px';
+    mainPin.style.left = window.actualPosition.x + 'px';
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    enablePage();
+    pinClickHandler();
+    calculatePinCoords(upEvt);
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
 });
