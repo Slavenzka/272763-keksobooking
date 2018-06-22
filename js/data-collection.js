@@ -51,7 +51,7 @@
 
 
   var fillTickets = function (quantity, ticketArray, textDesctiptionArray, offerType, checkins, checkouts, features, photos) {
-    var indexes = fillArray(indexArray, quantityTickets);
+    var indexes = fillArray(indexArray, window.quantityTickets);
     indexes = shuffleArray(indexes);
     var titlesShuffled = shuffleArray(textDesctiptionArray);
 
@@ -87,6 +87,6 @@
     return ticketArray;
   };
 
-  window.tickets = fillTickets(quantityTickets, arrayTickets, OFFER_DESCRIPTION, OFFER_TYPE, CHECKIN_LIST, CHECKOUT_LIST, FEATURES_LIST, FOTOS_LIST);
+  window.tickets = fillTickets(window.quantityTickets, arrayTickets, OFFER_DESCRIPTION, OFFER_TYPE, CHECKIN_LIST, CHECKOUT_LIST, FEATURES_LIST, FOTOS_LIST);
 
-} ());
+}());

@@ -7,18 +7,6 @@
   var formContent = document.querySelector('.ad-form');
   var formElementList = formContent.querySelectorAll('fieldset');
 
-  var disableFormElements = function (targetCollection) {
-    for (var i = 0; i < targetCollection.length; i++) {
-      targetCollection[i].disabled = 'disabled';
-    }
-  };
-
-  var enableFormElements = function (targetCollection) {
-    for (var i = 0; i < targetCollection.length; i++) {
-      targetCollection[i].disabled = '';
-    }
-  };
-
   window.formStatus = {
 
     enableFormElements: function (targetCollection) {
@@ -35,7 +23,7 @@
 
     formContent: document.querySelector('.ad-form'),
 
-    addressInput:document.querySelector('.ad-form').querySelector('#address')
+    addressInput: document.querySelector('.ad-form').querySelector('#address')
   };
 
   window.formStatus.disableFormElements(formElementList);
@@ -106,4 +94,4 @@
     checkMinPrice(typeOptions, typeSelect, priceInput);
   });
 
-} ());
+}());

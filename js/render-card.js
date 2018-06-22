@@ -2,7 +2,6 @@
 
 (function () {
 
-  var map = document.querySelector('.map');
   var templateCard = document.querySelector('#map-card-template').content.querySelector('.map__card');
 
 
@@ -60,4 +59,4 @@
     return element;
   };
 
-} ());
+}());
