@@ -94,4 +94,52 @@
     checkMinPrice(typeOptions, typeSelect, priceInput);
   });
 
+  // Отправка формы на сервер с выводом сообщения об ошибке
+
+  var restoreDefaultForm = function (form) {
+    var checkinSelect = form.querySelector('#timein');
+    var checkoutSelect = form.querySelector('#timeout');
+    var roomNumberSelect = form.querySelector('#room_number');
+    var guestNumberSelect = form.querySelector('#capacity');
+    var optionsList = form.querySelectorAll('[id^="feature-"]');
+    var textArea = form.querySelector('#description');
+
+    var restoreSelectField = function (field) {
+      for (var i = 0; i < field.options.length; i++) {
+        if (field.options[i] === field.querySelector('[selected]')) {
+          var indexDefault = i;
+        }
+      }
+      field.selectedIndex = indexDefault;
+    };
+
+    form.querySelector('#title').value = '';
+
+    form.querySelector('#address').value = Math.round(window.pin.DEFAULT_PIN_X + window.pin.DEFAULT_PIN_DIAMETER / 2).toString() + ', ' + Math.round(window.pin.DEFAULT_PIN_Y + window.pin.DEFAULT_PIN_DIAMETER / 2).toString();
+
+    restoreSelectField(typeSelect);
+    restoreSelectField(checkinSelect);
+    restoreSelectField(checkoutSelect);
+    restoreSelectField(roomNumberSelect);
+    restoreSelectField(guestNumberSelect);
+
+    priceInput.value = '';
+
+    for (var i = 0; i < optionsList.length; i++) {
+     optionsList[i].checked = false;
+    }
+
+    textArea.value = '';
+  };
+
+  formContent.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(formContent), function () {
+      restoreDefaultForm(formContent);
+    }, function (errorText) {
+      window.backend.errorMessage(errorText);
+    });
+
+    evt.preventDefault();
+  });
+
 }());
