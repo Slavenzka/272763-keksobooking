@@ -126,7 +126,7 @@
     priceInput.value = '';
 
     for (var i = 0; i < optionsList.length; i++) {
-     optionsList[i].checked = false;
+      optionsList[i].checked = false;
     }
 
     textArea.value = '';
