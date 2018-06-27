@@ -30,17 +30,14 @@
           onLoad(xhr.response);
         } else {
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-          window.backend.errorMessage('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
         }
       });
 
       xhr.addEventListener('error', function () {
         onError('Произошла ошибка соединения');
-        window.backend.errorMessage('Произошла ошибка соединения');
       });
       xhr.addEventListener('timeout', function () {
         onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-        window.backend.errorMessage('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
       xhr.timeout = 10000;
@@ -63,11 +60,9 @@
 
       xhr.addEventListener('error', function () {
         onError('Произошла ошибка соединения');
-        window.backend.errorMessage('Произошла ошибка соединения');
       });
       xhr.addEventListener('timeout', function () {
         onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-        window.backend.errorMessage('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
       xhr.timeout = 10000;
