@@ -42,8 +42,8 @@
 
     window.pin.updateMainPinCoordinates(window.pin.DEFAULT_PIN_X, window.pin.DEFAULT_PIN_Y, window.formStatus.addressInput);
 
-    for (var i = 0; i < window.quantityTickets; i++) {
-      fragmentPin.appendChild(window.pin.renderPin(window.tickets, i));
+    for (var i = 0; i < window.dataCollection.quantityTickets; i++) {
+      fragmentPin.appendChild(window.pin.renderPin(window.dataCollection.tickets, i));
     }
 
     pinList.appendChild(fragmentPin);
@@ -69,7 +69,7 @@
 
         eraseExistingCard();
 
-        pinClickCardRenderer(window.tickets, evt.currentTarget.dataset.id);
+        pinClickCardRenderer(window.dataCollection.tickets, evt.currentTarget.dataset.id);
 
         closeCardPopup();
       });
