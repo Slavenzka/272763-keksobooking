@@ -33,15 +33,14 @@
             return (it.offer.price >= 0) && (it.offer.price <= 10000);
           case 'high':
             return (it.offer.price >= 50000);
-          case 'any':
-            return it;
         }
+        return it;
       });
 
       var filteredPins = pinType.concat(pinPrice);
 
-      var uniquePins = filteredPins.filter(function (it, i) {
-        return (filteredPins.indexOf(it, i+1) > 0);
+      var uniquePins = filteredPins.filter(function (it, n) {
+        return (filteredPins.indexOf(it, n + 1) > 0);
       });
 
       while (pinList.children.length > 2) {
