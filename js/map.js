@@ -40,7 +40,7 @@
 
     window.pin.updateMainPinCoordinates(window.pin.DEFAULT_PIN_X, window.pin.DEFAULT_PIN_Y, window.formStatus.addressInput);
 
-    window.renderPin(window.dataCollection.tickets, window.dataCollection.quantityTickets, pinList);
+    window.pin.renderPin(window.dataCollection.tickets, window.dataCollection.quantityTickets, pinList);
   };
 
   //  Закрытие карточки с описанием
