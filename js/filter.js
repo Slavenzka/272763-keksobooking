@@ -24,7 +24,8 @@
       pinList.removeChild(pinList.children[2]);
     }
 
-    window.pin.renderPin(pinType, pinType.length);
+    window.renderPin(pinType, pinType.length);
+    window.eraseExistingCard();
     window.pinClickHandler(pinType);
   });
 

@@ -11,17 +11,6 @@
     map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
   };
 
-  // Удаляем ранее созданную карточку, если таковая существует
-
-  var eraseExistingCard = function () {
-
-    var previousCard = map.querySelector('.map__card');
-
-    if (!(previousCard === null)) {
-      map.removeChild(previousCard);
-    }
-  };
-
   //  Активация страницы
 
   var map = document.querySelector('.map');
@@ -40,7 +29,7 @@
 
     window.pin.updateMainPinCoordinates(window.pin.DEFAULT_PIN_X, window.pin.DEFAULT_PIN_Y, window.formStatus.addressInput);
 
-    window.pin.renderPin(window.dataCollection.tickets, window.dataCollection.quantityTickets, pinList);
+    window.renderPin(window.dataCollection.tickets, window.dataCollection.quantityTickets);
   };
 
   //  Закрытие карточки с описанием
@@ -49,7 +38,7 @@
     var cardCloseButton = map.querySelector('.popup__close');
 
     cardCloseButton.addEventListener('click', function () {
-      eraseExistingCard();
+      window.eraseExistingCard();
     });
   };
 
@@ -61,7 +50,7 @@
     for (var i = 0; i < renderedPinList.length; i++) {
       renderedPinList[i].addEventListener('click', function (evt) {
 
-        eraseExistingCard();
+        window.eraseExistingCard();
 
         pinClickCardRenderer(targetArray, evt.currentTarget.dataset.id);
 
