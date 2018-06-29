@@ -32,8 +32,6 @@
 
   var enablePage = function () {
 
-    var fragmentPin = document.createDocumentFragment();
-
     map.classList.remove('map--faded');
 
     window.formStatus.enableFormElements(formElementList);
@@ -42,11 +40,7 @@
 
     window.pin.updateMainPinCoordinates(window.pin.DEFAULT_PIN_X, window.pin.DEFAULT_PIN_Y, window.formStatus.addressInput);
 
-    for (var i = 0; i < window.dataCollection.quantityTickets; i++) {
-      fragmentPin.appendChild(window.pin.renderPin(window.dataCollection.tickets, i));
-    }
-
-    pinList.appendChild(fragmentPin);
+    window.renderPin(window.dataCollection.tickets, window.dataCollection.quantityTickets, pinList);
   };
 
   //  Закрытие карточки с описанием
@@ -61,7 +55,7 @@
 
   // Обработка клика на пин
 
-  var pinClickHandler = function () {
+  window.pinClickHandler = function (targetArray) {
     var renderedPinList = pinList.querySelectorAll('.map__pin:not(.map__pin--main)');
 
     for (var i = 0; i < renderedPinList.length; i++) {
@@ -69,7 +63,7 @@
 
         eraseExistingCard();
 
-        pinClickCardRenderer(window.dataCollection.tickets, evt.currentTarget.dataset.id);
+        pinClickCardRenderer(targetArray, evt.currentTarget.dataset.id);
 
         closeCardPopup();
       });
@@ -87,6 +81,13 @@
     };
 
     var calculatePinCoords = function (evtType) {
+
+      var limitCoords = {
+        Xmin: 300,
+        Xmax: 900,
+        Ymin: 130,
+        Ymax: 630
+      };
 
       var shift = {
         x: startCoords.x - evtType.clientX,
@@ -109,12 +110,12 @@
         actualPositionX = 1135;
       }
 
-      if (actualPositionY < window.limitCoords.Ymin) {
-        actualPositionY = window.limitCoords.Ymin;
+      if (actualPositionY < limitCoords.Ymin) {
+        actualPositionY = limitCoords.Ymin;
       }
 
-      if (actualPositionY > window.limitCoords.Ymax) {
-        actualPositionY = window.limitCoords.Ymax;
+      if (actualPositionY > limitCoords.Ymax) {
+        actualPositionY = limitCoords.Ymax;
       }
 
       window.pin.updateMainPinCoordinates(actualPositionX, actualPositionY, window.formStatus.addressInput);
@@ -139,7 +140,7 @@
       upEvt.preventDefault();
 
       enablePage();
-      pinClickHandler();
+      window.pinClickHandler(window.dataCollection.tickets);
       calculatePinCoords(upEvt);
 
       document.removeEventListener('mousemove', onMouseMove);

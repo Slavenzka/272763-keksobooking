@@ -2,13 +2,6 @@
 
 (function () {
 
-  window.limitCoords = {
-    Xmin: 300,
-    Xmax: 900,
-    Ymin: 130,
-    Ymax: 630
-  };
-
   window.backend.load(function (ticketsReceived) {
     window.dataCollection = {
       tickets: [],
