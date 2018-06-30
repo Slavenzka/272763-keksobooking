@@ -4,6 +4,7 @@
   var filterForm = document.querySelector('.map__filters');
   var filterType = filterForm.querySelector('#housing-type');
   var filterPrice = filterForm.querySelector('#housing-price');
+  var filterRooms = filterForm.querySelector('#housing-rooms');
 
   var pinList = document.querySelector('.map__pins');
 
@@ -37,11 +38,27 @@
         return it;
       });
 
-      var filteredPins = pinType.concat(pinPrice);
+      var pinRooms = ticketsDownloaded.filter(function (it) {
+        switch (filterRooms.options[filterRooms.options.selectedIndex].value) {
+          case '1':
+            return (it.offer.rooms === 1);
+          case '2':
+            return (it.offer.rooms === 2);
+          case '3':
+            return (it.offer.rooms === 3);
+        }
+        return it;
+      });
+
+      var filteredPins = pinType.concat(pinPrice, pinRooms);
 
       var uniquePins = filteredPins.filter(function (it, n) {
-        return (filteredPins.indexOf(it, n + 1) > 0);
+
+       return (filteredPins.indexOf(it, n + 1) > 0) && (filteredPins.lastIndexOf(it) !== filteredPins.indexOf(it, n + 1));
+
       });
+
+      console.log(uniquePins);
 
       while (pinList.children.length > 2) {
         pinList.removeChild(pinList.children[2]);
