@@ -54,11 +54,9 @@
 
       var uniquePins = filteredPins.filter(function (it, n) {
 
-       return (filteredPins.indexOf(it, n + 1) > 0) && (filteredPins.lastIndexOf(it) !== filteredPins.indexOf(it, n + 1));
+        return (filteredPins.indexOf(it, n + 1) > 0) && (filteredPins.lastIndexOf(it) !== filteredPins.indexOf(it, n + 1));
 
       });
-
-      console.log(uniquePins);
 
       while (pinList.children.length > 2) {
         pinList.removeChild(pinList.children[2]);
