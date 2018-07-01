@@ -2,13 +2,11 @@
 
 (function () {
   var filterFormElem = document.querySelector('.map__filters');
-  var selectOptionsElem = filterFormElem.querySelector('#select-options');
   var filterTypeElem = filterFormElem.querySelector('#housing-type');
   var filterPriceElem = filterFormElem.querySelector('#housing-price');
   var filterRoomsElem = filterFormElem.querySelector('#housing-rooms');
   var filterGuestsElem = filterFormElem.querySelector('#housing-guests');
   var pinList = document.querySelector('.map__pins');
-  var filterItems = filterFormElem.querySelectorAll('select');
   var filterFeaturesElem = filterFormElem.querySelector('#housing-features');
   var featureItems = filterFeaturesElem.querySelectorAll('input[type="checkbox"]');
   var lastTimeout;
@@ -34,7 +32,7 @@
 
     for (var j = 0; j < selectedFeatures.length; j++) {
       if (element.offer.features.includes(selectedFeatures[j]) === false) {
-        return false
+        return false;
       }
     }
     return true;
@@ -122,7 +120,7 @@
     window.pinClickHandler(sortedPinsArray);
   };
 
-  filterFormElem.addEventListener('change', function (evt) {
+  filterFormElem.addEventListener('change', function () {
 
     var ticketsDownloaded = window.dataCollection.tickets;
 
