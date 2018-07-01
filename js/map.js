@@ -29,7 +29,7 @@
 
     window.pin.updateMainPinCoordinates(window.pin.DEFAULT_PIN_X, window.pin.DEFAULT_PIN_Y, window.formStatus.addressInput);
 
-    window.renderPin(window.dataCollection.tickets, window.dataCollection.quantityTickets);
+    window.renderPin(window.dataCollection.tickets);
   };
 
   //  Закрытие карточки с описанием
@@ -131,6 +131,7 @@
       enablePage();
       window.pinClickHandler(window.dataCollection.tickets);
       calculatePinCoords(upEvt);
+      window.uniquePins = window.dataCollection.tickets;
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
