@@ -74,7 +74,6 @@
     } else if (selectedGuests === 'any') {
       return true;
     }
-
     return false;
   };
 

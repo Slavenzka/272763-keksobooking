@@ -18,6 +18,7 @@
   var pinList = document.querySelector('.map__pins');
   var formContent = document.querySelector('.ad-form');
   var formElementList = formContent.querySelectorAll('fieldset');
+  var isActivated = false;
 
   var enablePage = function () {
 
@@ -39,6 +40,14 @@
 
     cardCloseButton.addEventListener('click', function () {
       window.eraseExistingCard();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      var ESC_KEY = 27;
+
+      if (evt.keyCode === ESC_KEY) {
+        window.eraseExistingCard();
+      }
     });
   };
 
@@ -62,6 +71,7 @@
   // Реализация drag & drop для элемента .map__pin--main
 
   mainPin.addEventListener('mousedown', function (evt) {
+
     evt.preventDefault();
 
     var startCoords = {
@@ -128,13 +138,17 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      enablePage();
-      window.pinClickHandler(window.dataCollection.tickets);
-      calculatePinCoords(upEvt);
-      window.uniquePins = window.dataCollection.tickets;
+      if (isActivated === false) {
+        enablePage();
+        window.pinClickHandler(window.dataCollection.tickets);
+        calculatePinCoords(upEvt);
+        window.uniquePins = window.dataCollection.tickets;
+        isActivated = true;
+      }
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+
     };
 
     document.addEventListener('mousemove', onMouseMove);
