@@ -41,20 +41,11 @@
   var filterPrice = function (element) {
     switch (filterPriceElem.options[filterPriceElem.options.selectedIndex].value) {
       case 'middle':
-        if ((element.offer.price > 10000) && (element.offer.price < 50000)) {
-          return true;
-        }
-        return false;
+        return (element.offer.price > 10000) && (element.offer.price < 50000);
       case 'low':
-        if ((element.offer.price >= 0) && (element.offer.price <= 10000)) {
-          return true;
-        }
-        return false;
+        return (element.offer.price >= 0) && (element.offer.price <= 10000);
       case 'high':
-        if (element.offer.price >= 50000) {
-          return true;
-        }
-        return false;
+        return element.offer.price >= 50000;
       case 'any':
         return true;
       default:
@@ -65,20 +56,11 @@
   var filterRooms = function (element) {
     switch (filterRoomsElem.options[filterRoomsElem.options.selectedIndex].value) {
       case '1':
-        if (element.offer.rooms === 1) {
-          return true;
-        }
-        return false;
+        return element.offer.rooms === 1;
       case '2':
-        if (element.offer.rooms === 2) {
-          return true;
-        }
-        return false;
+        return element.offer.rooms === 2;
       case '3':
-        if (element.offer.rooms === 3) {
-          return true;
-        }
-        return false;
+        return element.offer.rooms === 3;
       case 'any':
         return true;
       default:
@@ -89,20 +71,11 @@
   var filterGuests = function (element) {
     switch (filterGuestsElem.options[filterGuestsElem.options.selectedIndex].value) {
       case '0':
-        if (element.offer.guests === 0) {
-          return true;
-        }
-        return false;
+        return element.offer.guests === 0;
       case '1':
-        if (element.offer.guests === 1) {
-          return true;
-        }
-        return false;
+        return element.offer.guests === 1;
       case '2':
-        if (element.offer.guests === 2) {
-          return true;
-        }
-        return false;
+        return element.offer.guests === 2;
       case 'any':
         return true;
       default:
