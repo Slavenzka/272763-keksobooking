@@ -11,17 +11,6 @@
     map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
   };
 
-  // Удаляем ранее созданную карточку, если таковая существует
-
-  var eraseExistingCard = function () {
-
-    var previousCard = map.querySelector('.map__card');
-
-    if (!(previousCard === null)) {
-      map.removeChild(previousCard);
-    }
-  };
-
   //  Активация страницы
 
   var map = document.querySelector('.map');
@@ -29,10 +18,9 @@
   var pinList = document.querySelector('.map__pins');
   var formContent = document.querySelector('.ad-form');
   var formElementList = formContent.querySelectorAll('fieldset');
+  var isActivated = false;
 
   var enablePage = function () {
-
-    var fragmentPin = document.createDocumentFragment();
 
     map.classList.remove('map--faded');
 
@@ -42,11 +30,7 @@
 
     window.pin.updateMainPinCoordinates(window.pin.DEFAULT_PIN_X, window.pin.DEFAULT_PIN_Y, window.formStatus.addressInput);
 
-    for (var i = 0; i < window.dataCollection.quantityTickets; i++) {
-      fragmentPin.appendChild(window.pin.renderPin(window.dataCollection.tickets, i));
-    }
-
-    pinList.appendChild(fragmentPin);
+    window.renderPin(window.dataCollection.tickets);
   };
 
   //  Закрытие карточки с описанием
@@ -55,21 +39,29 @@
     var cardCloseButton = map.querySelector('.popup__close');
 
     cardCloseButton.addEventListener('click', function () {
-      eraseExistingCard();
+      window.eraseExistingCard();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      var ESC_KEY = 27;
+
+      if (evt.keyCode === ESC_KEY) {
+        window.eraseExistingCard();
+      }
     });
   };
 
   // Обработка клика на пин
 
-  var pinClickHandler = function () {
+  window.pinClickHandler = function (targetArray) {
     var renderedPinList = pinList.querySelectorAll('.map__pin:not(.map__pin--main)');
 
     for (var i = 0; i < renderedPinList.length; i++) {
       renderedPinList[i].addEventListener('click', function (evt) {
 
-        eraseExistingCard();
+        window.eraseExistingCard();
 
-        pinClickCardRenderer(window.dataCollection.tickets, evt.currentTarget.dataset.id);
+        pinClickCardRenderer(targetArray, evt.currentTarget.dataset.id);
 
         closeCardPopup();
       });
@@ -79,6 +71,7 @@
   // Реализация drag & drop для элемента .map__pin--main
 
   mainPin.addEventListener('mousedown', function (evt) {
+
     evt.preventDefault();
 
     var startCoords = {
@@ -87,6 +80,13 @@
     };
 
     var calculatePinCoords = function (evtType) {
+
+      var limitCoords = {
+        Xmin: 300,
+        Xmax: 900,
+        Ymin: 130,
+        Ymax: 630
+      };
 
       var shift = {
         x: startCoords.x - evtType.clientX,
@@ -109,12 +109,12 @@
         actualPositionX = 1135;
       }
 
-      if (actualPositionY < window.limitCoords.Ymin) {
-        actualPositionY = window.limitCoords.Ymin;
+      if (actualPositionY < limitCoords.Ymin) {
+        actualPositionY = limitCoords.Ymin;
       }
 
-      if (actualPositionY > window.limitCoords.Ymax) {
-        actualPositionY = window.limitCoords.Ymax;
+      if (actualPositionY > limitCoords.Ymax) {
+        actualPositionY = limitCoords.Ymax;
       }
 
       window.pin.updateMainPinCoordinates(actualPositionX, actualPositionY, window.formStatus.addressInput);
@@ -138,12 +138,17 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      enablePage();
-      pinClickHandler();
-      calculatePinCoords(upEvt);
+      if (isActivated === false) {
+        enablePage();
+        window.pinClickHandler(window.dataCollection.tickets);
+        calculatePinCoords(upEvt);
+        window.uniquePins = window.dataCollection.tickets;
+        isActivated = true;
+      }
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+
     };
 
     document.addEventListener('mousemove', onMouseMove);
