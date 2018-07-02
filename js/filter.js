@@ -54,32 +54,24 @@
   };
 
   var filterRooms = function (element) {
-    switch (filterRoomsElem.options[filterRoomsElem.options.selectedIndex].value) {
-      case '1':
-        return element.offer.rooms === 1;
-      case '2':
-        return element.offer.rooms === 2;
-      case '3':
-        return element.offer.rooms === 3;
-      case 'any':
-        return true;
-      default:
-        return false;
+
+    var selectedRooms = filterRoomsElem.options[filterRoomsElem.options.selectedIndex].value;
+
+    if (parseInt(selectedRooms) === element.offer.rooms) {
+      return true;
+    } else if (selectedRooms === 'any') {
+      return true;
     }
   };
 
   var filterGuests = function (element) {
-    switch (filterGuestsElem.options[filterGuestsElem.options.selectedIndex].value) {
-      case '0':
-        return element.offer.guests === 0;
-      case '1':
-        return element.offer.guests === 1;
-      case '2':
-        return element.offer.guests === 2;
-      case 'any':
-        return true;
-      default:
-        return false;
+
+    var selectedGuests = filterGuestsElem.options[filterGuestsElem.options.selectedIndex].value;
+
+    if (parseInt(selectedGuests) === element.offer.guests) {
+      return true;
+    } else if (selectedGuests === 'any') {
+      return true;
     }
   };
 
@@ -99,7 +91,13 @@
 
 
     var selectedPins = ticketsDownloaded.filter(function (it) {
-      return ((filterType(it) === true) && (filterPrice(it) === true) && (filterRooms(it) === true) && (filterGuests(it) === true) && (filterFeatures(it) === true));
+      return (
+        (filterType(it) === true) &&
+        (filterPrice(it) === true) &&
+        (filterRooms(it) === true) &&
+        (filterGuests(it) === true) &&
+        (filterFeatures(it) === true)
+      );
     });
 
     if (lastTimeout) {
