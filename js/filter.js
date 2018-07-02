@@ -57,22 +57,25 @@
 
     var selectedRooms = filterRoomsElem.options[filterRoomsElem.options.selectedIndex].value;
 
-    if (parseInt(selectedRooms) === element.offer.rooms) {
+    if (parseInt(selectedRooms, 10) === element.offer.rooms) {
       return true;
     } else if (selectedRooms === 'any') {
       return true;
     }
+    return false;
   };
 
   var filterGuests = function (element) {
 
     var selectedGuests = filterGuestsElem.options[filterGuestsElem.options.selectedIndex].value;
 
-    if (parseInt(selectedGuests) === element.offer.guests) {
+    if (parseInt(selectedGuests, 10) === element.offer.guests) {
       return true;
     } else if (selectedGuests === 'any') {
       return true;
     }
+
+    return false;
   };
 
   var renderSelectedPins = function (sortedPinsArray) {
