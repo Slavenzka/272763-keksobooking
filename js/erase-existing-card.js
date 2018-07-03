@@ -6,7 +6,7 @@
 
   window.eraseExistingCard = function () {
 
-    var map = document.querySelector('.map');
+    var map = window.globalElements.map.mapArea;
     var previousCard = map.querySelector('.map__card');
 
     if (!(previousCard === null)) {

@@ -13,12 +13,11 @@
 
   //  Активация страницы
 
-  var map = document.querySelector('.map');
-  var mainPin = document.querySelector('.map__pin--main');
-  var pinList = document.querySelector('.map__pins');
-  var formContent = document.querySelector('.ad-form');
+  var map = window.globalElements.map.mapArea;
+  var mainPin = window.globalElements.map.mainPin;
+  var pinList = window.globalElements.map.pinList;
+  var formContent = window.globalElements.form.formContent;
   var formElementList = formContent.querySelectorAll('fieldset');
-  var isActivated = false;
 
   var enablePage = function () {
 
@@ -57,7 +56,14 @@
     var renderedPinList = pinList.querySelectorAll('.map__pin:not(.map__pin--main)');
 
     for (var i = 0; i < renderedPinList.length; i++) {
+
       renderedPinList[i].addEventListener('click', function (evt) {
+
+        if (document.querySelector('.map__pin--active') !== null) {
+          document.querySelector('.map__pin--active').classList.remove('map__pin--active');
+        }
+
+        evt.currentTarget.classList.add('map__pin--active');
 
         window.eraseExistingCard();
 
@@ -138,12 +144,12 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      if (isActivated === false) {
+      if (window.globalElements.map.isActivated === false) {
         enablePage();
         window.pinClickHandler(window.dataCollection.tickets);
         calculatePinCoords(upEvt);
         window.uniquePins = window.dataCollection.tickets;
-        isActivated = true;
+        window.globalElements.map.isActivated = true;
       }
 
       document.removeEventListener('mousemove', onMouseMove);

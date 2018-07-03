@@ -4,8 +4,8 @@
 
 (function () {
 
-  var formContent = document.querySelector('.ad-form');
-  var formElementList = formContent.querySelectorAll('fieldset');
+  var formContent = window.globalElements.form.formContent;
+  var formElementList = window.globalElements.form.formElementList;
   var checkinSelect = formContent.querySelector('#timein');
   var checkoutSelect = formContent.querySelector('#timeout');
 
@@ -118,6 +118,21 @@
     var guestNumberSelect = form.querySelector('#capacity');
     var optionsList = form.querySelectorAll('[id^="feature-"]');
     var textArea = form.querySelector('#description');
+    var filterFormElem = document.querySelector('.map__filters');
+    var filterFeaturesElem = filterFormElem.querySelector('#housing-features');
+    var featureItems = filterFeaturesElem.querySelectorAll('input[type="checkbox"]');
+
+    var resetFeatures = function (featuresList) {
+      for (var i = 0; i < featuresList.length; i++) {
+        featuresList[i].checked = false;
+      }
+    };
+
+    window.globalElements.map.mapArea.classList.add('map--faded');
+    window.globalElements.map.isActivated = false;
+    window.removePins();
+    window.globalElements.map.mainPin.style.left = window.pin.DEFAULT_PIN_X.toString() + 'px';
+    window.globalElements.map.mainPin.style.top = window.pin.DEFAULT_PIN_Y.toString() + 'px';
 
     var restoreSelectField = function (field) {
       for (var i = 0; i < field.options.length; i++) {
@@ -140,18 +155,38 @@
 
     priceInput.value = '';
 
-    for (var i = 0; i < optionsList.length; i++) {
-      optionsList[i].checked = false;
-    }
+    resetFeatures(optionsList);
+    resetFeatures(featureItems);
+    window.eraseExistingCard();
 
     textArea.value = '';
+
+    window.eraseUploadedImages.avatar();
+    window.eraseUploadedImages.images();
+    window.formStatus.formContent.classList.add('ad-form--disabled');
+    window.formStatus.disableFormElements(window.globalElements.form.formElementList);
   };
+
+  // Сброс формы по нажатии .ad-form__reset
+
+  var resetFormButton = formContent.querySelector('.ad-form__reset');
+
+  resetFormButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
+    restoreDefaultForm(formContent);
+  });
+
+  // Обработка отправки формы
 
   formContent.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(formContent), function () {
       restoreDefaultForm(formContent);
     }, function (errorText) {
-      window.backend.errorMessage(errorText);
+      if (window.globalElements.page.isError === false) {
+        window.backend.errorMessage(errorText);
+      }
+      window.globalElements.page.isError = true;
     });
 
     evt.preventDefault();

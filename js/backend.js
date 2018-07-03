@@ -2,22 +2,24 @@
 
 (function () {
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
-  var URL_SAVE = 'https://js.dump.academy/keksobooking';
+  var URL_SAVE = 'http://httpbin.org/post';
 
   window.backend = {
     errorMessage: function (errorText) {
       var errorMsg = document.createElement('P');
       var errorClose = document.createElement('BUTTON');
+
       errorMsg.textContent = errorText;
       document.body.appendChild(errorMsg);
       errorMsg.appendChild(errorClose);
-      errorMsg.style = 'position: absolute; left: 50%; top: 200px; padding: 20px; color: black; z-index: 3; background-color: red;';
+      errorMsg.style = 'position: fixed; left: 50%; top: 200px; padding: 20px; color: black; z-index: 3; background-color: red;';
       errorClose.style = 'position: absolute; display: inline; right: 0; top: 0; padding: 0; margin: 0; line-height: 25px; color: black; z-index: 3; background-color: red; cursor: pointer;';
       errorClose.textContent = 'Х';
 
       errorClose.addEventListener('click', function (evt) {
         evt.preventDefault();
         document.body.removeChild(errorMsg);
+        window.globalElements.page.isError = false;
       });
     },
 

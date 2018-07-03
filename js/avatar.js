@@ -3,10 +3,11 @@
 (function () {
 
   var avatarChooser = document.querySelector('#avatar');
-  var previewBox = document.querySelector('.ad-form-header__preview');
-  var preview = previewBox.querySelector('img');
+  var avatarPreviewBox = document.querySelector('.ad-form-header__preview');
+  var avatarPreview = avatarPreviewBox.querySelector('img');
 
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var DEFAULT_AVATAR_URL = '../img/muffin-grey.svg';
 
   avatarChooser.addEventListener('change', function () {
 
@@ -21,7 +22,7 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        preview.src = reader.result;
+        avatarPreview.src = reader.result;
       });
 
       reader.readAsDataURL(file);
@@ -74,7 +75,23 @@
 
       reader.readAsDataURL(file);
     }
-
   });
+
+  window.eraseUploadedImages = {
+
+    avatar: function () {
+      avatarPreview.src = DEFAULT_AVATAR_URL;
+    },
+    images: function () {
+      if (imagePreviewBox.hasChildNodes()) {
+        imagePreviewBox.removeChild(imagePreviewBox.children[0]);
+      }
+
+      while (imageContainer.children.length > 2) {
+        imageContainer.removeChild(imageContainer.lastChild);
+      }
+    }
+
+  };
 
 })();
