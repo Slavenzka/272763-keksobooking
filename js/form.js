@@ -42,11 +42,16 @@
 
   var checkSelectionEquality = function (selectRooms, optionsCollectionRooms, selectCapacity, optionsCollectionCapacity) {
 
-    if (optionsCollectionRooms[selectRooms.options.selectedIndex].value !== optionsCollectionCapacity[selectCapacity.options.selectedIndex].value) {
+    var selectedRoomsValue = optionsCollectionRooms[selectRooms.options.selectedIndex].value;
 
-      selectCapacity.setCustomValidity('Количество гостей не совпадает с количеством комнат!');
-    } else {
-      selectCapacity.setCustomValidity('');
+    for (var i = 0; i < optionsCollectionCapacity.length; i++) {
+      if ((selectedRoomsValue === '100' && optionsCollectionCapacity[i].value !== '0') ||
+          (selectedRoomsValue !== '100' && optionsCollectionCapacity[i].value === '0') ||
+          (selectedRoomsValue < optionsCollectionCapacity[i].value)) {
+        optionsCollectionCapacity[i].disabled = 'disabled';
+      } else {
+        optionsCollectionCapacity[i].disabled = '';
+      }
     }
 
   };
@@ -89,6 +94,8 @@
   };
 
   // Включение обработчика на форме с исполнением описанных выше проверок
+
+  checkSelectionEquality(roomsQtySelect, roomsOptions, capacitySelect, capacityOptions);
 
   formContent.addEventListener('change', function (evt) {
 
