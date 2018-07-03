@@ -6,12 +6,16 @@
 
   var formContent = document.querySelector('.ad-form');
   var formElementList = formContent.querySelectorAll('fieldset');
+  var checkinSelect = formContent.querySelector('#timein');
+  var checkoutSelect = formContent.querySelector('#timeout');
 
   window.formStatus = {
 
     enableFormElements: function (targetCollection) {
       for (var i = 0; i < targetCollection.length; i++) {
-        targetCollection[i].disabled = '';
+        if (targetCollection[i].querySelector('#address') === null) {
+          targetCollection[i].disabled = '';
+        }
       }
     },
 
@@ -46,10 +50,6 @@
     }
 
   };
-
-  capacitySelect.addEventListener('change', function () {
-    checkSelectionEquality(roomsQtySelect, roomsOptions, capacitySelect, capacityOptions);
-  });
 
   // Зависимость минимально допустимой цены предложения от типа жилья
 
@@ -88,17 +88,25 @@
     }
   };
 
-  // Проверка цены для дефолтного значения типа жилья для единообразия сообщения об ошибке
+  // Включение обработчика на форме с исполнением описанных выше проверок
 
-  typeSelect.addEventListener('change', function () {
+  formContent.addEventListener('change', function (evt) {
+
+    var timeSync = function () {
+      if (checkinSelect.options.selectedIndex !== checkoutSelect.options.selectedIndex) {
+        checkoutSelect.options.selectedIndex = evt.target.options.selectedIndex;
+        checkinSelect.options.selectedIndex = evt.target.options.selectedIndex;
+      }
+    };
+
+    checkSelectionEquality(roomsQtySelect, roomsOptions, capacitySelect, capacityOptions);
     checkMinPrice(typeOptions, typeSelect, priceInput);
+    timeSync();
   });
 
   // Отправка формы на сервер с выводом сообщения об ошибке
 
   var restoreDefaultForm = function (form) {
-    var checkinSelect = form.querySelector('#timein');
-    var checkoutSelect = form.querySelector('#timeout');
     var roomNumberSelect = form.querySelector('#room_number');
     var guestNumberSelect = form.querySelector('#capacity');
     var optionsList = form.querySelectorAll('[id^="feature-"]');
