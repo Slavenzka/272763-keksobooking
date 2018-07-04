@@ -15,6 +15,9 @@
       for (var i = 0; i < targetCollection.length; i++) {
         if (targetCollection[i].querySelector('#address') === null) {
           targetCollection[i].disabled = '';
+        } else {
+          targetCollection[i].disabled = '';
+          targetCollection[i].querySelector('input').readOnly = true;
         }
       }
     },
