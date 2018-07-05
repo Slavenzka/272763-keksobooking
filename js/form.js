@@ -151,6 +151,7 @@
     restoreSelectField(guestNumberSelect);
 
     priceInput.value = '';
+    priceInput.placeholder = MIN_PRICE_BUNGALO;
 
     resetFeatures(optionsList);
     resetFeatures(featureItems);
@@ -162,6 +163,17 @@
     window.eraseUploadedImages.images();
     window.formStatus.formContent.classList.add('ad-form--disabled');
     window.formStatus.disableFormElements(window.globalElements.form.formElementList);
+
+    // Сброс фильтра при отправке или сбросе формы
+    var filterForm = window.globalElements.filter.filterFormElem;
+    var filterSelectFieldset = filterForm.querySelector('#select-options');
+
+    for (var i = 0; i < filterSelectFieldset.children.length; i++) {
+      var selectionField = filterSelectFieldset.children[i];
+
+      selectionField.value = selectionField.querySelector('[selected]').value;
+    }
+
   };
 
   // Сброс формы по нажатии .ad-form__reset
