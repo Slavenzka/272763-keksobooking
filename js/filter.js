@@ -3,11 +3,11 @@
 (function () {
   var TIMEOUT_DURATION = 500;
 
-  var filterFormElem = document.querySelector('.map__filters');
-  var filterTypeElem = filterFormElem.querySelector('#housing-type');
-  var filterPriceElem = filterFormElem.querySelector('#housing-price');
-  var filterRoomsElem = filterFormElem.querySelector('#housing-rooms');
-  var filterGuestsElem = filterFormElem.querySelector('#housing-guests');
+  var filterFormElem = window.globalElements.filter.filterFormElem;
+  var filterTypeElem = window.globalElements.filter.filterTypeElem;
+  var filterPriceElem = window.globalElements.filter.filterPriceElem;
+  var filterRoomsElem = window.globalElements.filter.filterRoomsElem;
+  var filterGuestsElem = window.globalElements.filter.filterGuestsElem;
   var filterFeaturesElem = filterFormElem.querySelector('#housing-features');
   var featureItems = filterFeaturesElem.querySelectorAll('input[type="checkbox"]');
   var lastTimeout;
