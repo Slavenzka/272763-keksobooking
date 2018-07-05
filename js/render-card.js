@@ -16,15 +16,24 @@
 
     element.querySelector('.popup__text--price').textContent = ticketsArray[index].offer.price + '₽/ночь';
 
-    if (ticketsArray[index].offer.type === 'flat') {
-      element.querySelector('.popup__type').textContent = 'Квартира';
-    } else if (ticketsArray[index].offer.type === 'palace') {
-      element.querySelector('.popup__type').textContent = 'Дворец';
-    } else if (ticketsArray[index].offer.type === 'house') {
-      element.querySelector('.popup__type').textContent = 'Дом';
-    } else if (ticketsArray[index].offer.type === 'bungalo') {
-      element.querySelector('.popup__type').textContent = 'Бунгало';
+    switch (ticketsArray[index].offer.type) {
+      case 'flat':
+        element.querySelector('.popup__type').textContent = 'Квартира';
+        break;
+
+      case 'palace':
+        element.querySelector('.popup__type').textContent = 'Дворец';
+        break;
+
+      case 'house':
+        element.querySelector('.popup__type').textContent = 'Дом';
+        break;
+
+      default:
+        element.querySelector('.popup__type').textContent = 'Бунгало';
+        break;
     }
+
 
     element.querySelector('.popup__text--capacity').textContent = ticketsArray[index].offer.rooms + ' комнаты для ' + ticketsArray[index].offer.guests + ' гостей';
 
