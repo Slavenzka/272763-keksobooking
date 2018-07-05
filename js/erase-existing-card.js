@@ -9,7 +9,7 @@
     var map = window.globalElements.map.mapArea;
     var previousCard = map.querySelector('.map__card');
 
-    if (!(previousCard === null)) {
+    if (previousCard !== null) {
       map.removeChild(previousCard);
     }
   };

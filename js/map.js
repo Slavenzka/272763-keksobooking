@@ -3,6 +3,7 @@
 (function () {
 
   // Метод для отрисовки карточки предложения по клику на соответствующий пин
+  var ESC_KEY = 27;
 
   var pinClickCardRenderer = function (ticketArray, index) {
     var fragmentCard = document.createDocumentFragment();
@@ -42,7 +43,6 @@
     });
 
     document.addEventListener('keydown', function (evt) {
-      var ESC_KEY = 27;
 
       if (evt.keyCode === ESC_KEY) {
         window.eraseExistingCard();
@@ -144,7 +144,7 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      if (window.globalElements.map.isActivated === false) {
+      if (!window.globalElements.map.isActivated) {
         enablePage();
         window.pinClickHandler(window.dataCollection.tickets);
         calculatePinCoords(upEvt);

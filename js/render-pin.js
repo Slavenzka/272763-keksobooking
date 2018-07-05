@@ -2,9 +2,9 @@
 
 (function () {
 
-  window.renderPin = function (dataArray) {
+  var MAX_PIN_QTY = 5;
 
-    var MAX_PIN_QTY = 5;
+  window.renderPin = function (dataArray) {
 
     var pinList = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();

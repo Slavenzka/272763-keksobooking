@@ -3,10 +3,14 @@
 (function () {
 
   window.removePins = function () {
-    var pinList = document.querySelector('.map__pins');
 
-    while (pinList.children.length > 2) {
-      pinList.removeChild(pinList.children[2]);
+    var pinList = window.globalElements.map.pinList;
+    var targetPin = pinList.querySelector('.map__pin:not(.map__pin--main)');
+
+    while (targetPin !== null) {
+      pinList.removeChild(targetPin);
+      targetPin = pinList.querySelector('.map__pin:not(.map__pin--main)');
+
     }
   };
 

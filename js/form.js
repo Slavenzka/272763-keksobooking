@@ -4,6 +4,11 @@
 
 (function () {
 
+  var MIN_PRICE_FLAT = 1000;
+  var MIN_PRICE_BUNGALO = 0;
+  var MIN_PRICE_HOUSE = 5000;
+  var MIN_PRICE_PALACE = 10000;
+
   var formContent = window.globalElements.form.formContent;
   var formElementList = window.globalElements.form.formElementList;
   var checkinSelect = formContent.querySelector('#timein');
@@ -65,11 +70,6 @@
   var typeOptions = typeSelect.querySelectorAll('option');
   var priceInput = formContent.querySelector('#price');
 
-  var MIN_PRICE_FLAT = 1000;
-  var MIN_PRICE_BUNGALO = 0;
-  var MIN_PRICE_HOUSE = 5000;
-  var MIN_PRICE_PALACE = 10000;
-
   var modifyMinPrice = function (input, minPrice) {
     input.min = minPrice;
     input.placeholder = input.min;
@@ -77,22 +77,16 @@
 
   var checkMinPrice = function (optionsCollection, typeSelection) {
 
-    if (optionsCollection[typeSelection.options.selectedIndex].value === 'flat') {
+    var selectedType = optionsCollection[typeSelection.options.selectedIndex].value;
 
+    if (selectedType === 'flat') {
       modifyMinPrice(priceInput, MIN_PRICE_FLAT);
-
-    } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'bungalo') {
-
+    } else if (selectedType === 'bungalo') {
       modifyMinPrice(priceInput, MIN_PRICE_BUNGALO);
-
-    } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'house') {
-
+    } else if (selectedType === 'house') {
       modifyMinPrice(priceInput, MIN_PRICE_HOUSE);
-
-    } else if (optionsCollection[typeSelection.options.selectedIndex].value === 'palace') {
-
+    } else if (selectedType === 'palace') {
       modifyMinPrice(priceInput, MIN_PRICE_PALACE);
-
     }
   };
 

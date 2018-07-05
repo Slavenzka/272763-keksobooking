@@ -2,12 +2,12 @@
 
 (function () {
 
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var DEFAULT_AVATAR_URL = '../img/muffin-grey.svg';
+
   var avatarChooser = document.querySelector('#avatar');
   var avatarPreviewBox = document.querySelector('.ad-form-header__preview');
   var avatarPreview = avatarPreviewBox.querySelector('img');
-
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  var DEFAULT_AVATAR_URL = '../img/muffin-grey.svg';
 
   avatarChooser.addEventListener('change', function () {
 
