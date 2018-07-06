@@ -71,6 +71,7 @@
       if ((selectedRoomsValue === '100' && capacitySelect.options[j].value === '0') ||
             (selectedRoomsValue === capacitySelect.options[j].value)) {
         capacitySelect.options.selectedIndex = j;
+        break;
       }
     }
   };
