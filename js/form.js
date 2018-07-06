@@ -62,16 +62,18 @@
         optionsCollectionCapacity[i].disabled = '';
       }
     }
+  };
 
-    for (var j = 0; j < selectCapacity.options.length; j++) {
+  var syncRoomsCapacity = function () {
+    var selectedRoomsValue = roomsOptions[roomsQtySelect.options.selectedIndex].value;
 
-      if ((selectedRoomsValue === '100' && selectCapacity.options[j].value === '0') ||
-          (selectedRoomsValue === selectCapacity.options[j].value)) {
-        selectCapacity.options.selectedIndex = j;
+    for (var j = 0; j < capacitySelect.options.length; j++) {
+      if ((selectedRoomsValue === '100' && capacitySelect.options[j].value === '0') ||
+            (selectedRoomsValue === capacitySelect.options[j].value)) {
+        capacitySelect.options.selectedIndex = j;
         break;
       }
     }
-
   };
 
   // Зависимость минимально допустимой цены предложения от типа жилья
@@ -105,6 +107,10 @@
   checkSelectionEquality(roomsQtySelect, roomsOptions, capacitySelect, capacityOptions);
 
   formContent.addEventListener('change', function (evt) {
+
+    if (evt.target.id === 'room_number') {
+      syncRoomsCapacity();
+    }
 
     var timeSync = function () {
       if (checkinSelect.options.selectedIndex !== checkoutSelect.options.selectedIndex) {
