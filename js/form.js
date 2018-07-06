@@ -53,12 +53,22 @@
     var selectedRoomsValue = optionsCollectionRooms[selectRooms.options.selectedIndex].value;
 
     for (var i = 0; i < optionsCollectionCapacity.length; i++) {
+
       if ((selectedRoomsValue === '100' && optionsCollectionCapacity[i].value !== '0') ||
           (selectedRoomsValue !== '100' && optionsCollectionCapacity[i].value === '0') ||
           (selectedRoomsValue < optionsCollectionCapacity[i].value)) {
         optionsCollectionCapacity[i].disabled = 'disabled';
       } else {
         optionsCollectionCapacity[i].disabled = '';
+      }
+    }
+
+    for (var j = 0; j < selectCapacity.options.length; j++) {
+
+      if ((selectedRoomsValue === '100' && selectCapacity.options[j].value === '0') ||
+          (selectedRoomsValue === selectCapacity.options[j].value)) {
+        selectCapacity.options.selectedIndex = j;
+        break;
       }
     }
 
@@ -135,6 +145,7 @@
       for (var i = 0; i < field.options.length; i++) {
         if (field.options[i] === field.querySelector('[selected]')) {
           var indexDefault = i;
+          break;
         }
       }
       field.selectedIndex = indexDefault;
@@ -192,7 +203,7 @@
     window.backend.save(new FormData(formContent), function () {
       restoreDefaultForm(formContent);
     }, function (errorText) {
-      if (window.globalElements.page.isError === false) {
+      if (!window.globalElements.page.isError) {
         window.backend.errorMessage(errorText);
       }
       window.globalElements.page.isError = true;
