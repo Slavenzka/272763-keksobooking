@@ -3,7 +3,7 @@
 (function () {
 
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  var DEFAULT_AVATAR_URL = '/img/muffin-grey.svg';
+  var DEFAULT_AVATAR_URL = 'img/muffin-grey.svg';
 
   var avatarChooser = document.querySelector('#avatar');
   var avatarPreviewBox = document.querySelector('.ad-form-header__preview');
@@ -33,6 +33,18 @@
   var imagePreviewBox = document.querySelector('.ad-form__photo');
   var imageContainer = document.querySelector('.ad-form__photo-container');
   var isUploaded = false;
+
+  var getDefaultContainerLength = function () {
+    for (var i = 0; i < imageContainer.children.length; i++) {
+      if (imageContainer.children[i].className === 'ad-form__photo') {
+        return i + 1;
+      }
+    }
+
+    return imageContainer.children.length;
+  };
+
+  var defaultContainerLength = getDefaultContainerLength();
 
   var setImageStyle = function (imageBox, image) {
     imageBox.style = 'display: flex; align-items: center;';
@@ -87,9 +99,11 @@
         imagePreviewBox.removeChild(imagePreviewBox.children[0]);
       }
 
-      while (imageContainer.children.length > 2) {
+      while (imageContainer.children.length > defaultContainerLength) {
         imageContainer.removeChild(imageContainer.lastChild);
       }
+
+      isUploaded = false;
     }
 
   };
