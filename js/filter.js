@@ -22,11 +22,11 @@
   var filterFeatures = function (element) {
     var selectedFeatures = [];
 
-    for (var i = 0; i < featureItems.length; i++) {
-      if (featureItems[i].checked) {
-        selectedFeatures.push(featureItems[i].value);
+    featureItems.forEach(function (it) {
+      if (it.checked) {
+        selectedFeatures.push(it.value);
       }
-    }
+    });
 
     for (var j = 0; j < selectedFeatures.length; j++) {
       if (!element.offer.features.includes(selectedFeatures[j])) {
@@ -67,7 +67,6 @@
 
   var renderSelectedPins = function (sortedPinsArray) {
     window.removePins();
-
     window.renderPin(sortedPinsArray);
     window.eraseExistingCard();
     window.pinClickHandler(sortedPinsArray);
@@ -76,7 +75,6 @@
   filterFormElem.addEventListener('change', function () {
 
     var ticketsDownloaded = window.dataCollection.tickets;
-
 
     var selectedPins = ticketsDownloaded.filter(function (it) {
       return (
