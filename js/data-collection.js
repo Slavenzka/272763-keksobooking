@@ -8,9 +8,9 @@
       quantityTickets: ticketsReceived.length
     };
 
-    for (var i = 0; i < ticketsReceived.length; i++) {
-      window.dataCollection.tickets[i] = ticketsReceived[i];
-    }
+    ticketsReceived.forEach(function (element, index) {
+      window.dataCollection.tickets[index] = element;
+    });
   }, function (errorText) {
     window.backend.errorMessage(errorText);
   });

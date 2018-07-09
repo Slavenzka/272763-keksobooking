@@ -35,6 +35,7 @@
   var isUploaded = false;
 
   var getDefaultContainerLength = function () {
+
     for (var i = 0; i < imageContainer.children.length; i++) {
       if (imageContainer.children[i].className === 'ad-form__photo') {
         return i + 1;

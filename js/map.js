@@ -55,9 +55,9 @@
   window.pinClickHandler = function (targetArray) {
     var renderedPinList = pinList.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-    for (var i = 0; i < renderedPinList.length; i++) {
+    renderedPinList.forEach(function (it) {
 
-      renderedPinList[i].addEventListener('click', function (evt) {
+      it.addEventListener('click', function (evt) {
 
         if (document.querySelector('.map__pin--active') !== null) {
           document.querySelector('.map__pin--active').classList.remove('map__pin--active');
@@ -71,7 +71,7 @@
 
         closeCardPopup();
       });
-    }
+    });
   };
 
   // Реализация drag & drop для элемента .map__pin--main
@@ -107,21 +107,25 @@
       var actualPositionY = mainPin.offsetTop - shift.y;
       var actualPositionX = mainPin.offsetLeft - shift.x;
 
-      if (actualPositionX < 0) {
-        actualPositionX = 0;
-      }
+      var limitMapArea = function () {
+        if (actualPositionX < 0) {
+          actualPositionX = 0;
+        }
 
-      if (actualPositionX > 1135) {
-        actualPositionX = 1135;
-      }
+        if (actualPositionX > 1135) {
+          actualPositionX = 1135;
+        }
 
-      if (actualPositionY < limitCoords.Ymin) {
-        actualPositionY = limitCoords.Ymin;
-      }
+        if (actualPositionY < limitCoords.Ymin) {
+          actualPositionY = limitCoords.Ymin;
+        }
 
-      if (actualPositionY > limitCoords.Ymax) {
-        actualPositionY = limitCoords.Ymax;
-      }
+        if (actualPositionY > limitCoords.Ymax) {
+          actualPositionY = limitCoords.Ymax;
+        }
+      };
+
+      limitMapArea();
 
       window.pin.updateMainPinCoordinates(actualPositionX, actualPositionY, window.formStatus.addressInput);
 

@@ -17,20 +17,20 @@
   window.formStatus = {
 
     enableFormElements: function (targetCollection) {
-      for (var i = 0; i < targetCollection.length; i++) {
-        if (targetCollection[i].querySelector('#address') === null) {
-          targetCollection[i].disabled = '';
+      targetCollection.forEach(function (it) {
+        if (it.querySelector('#address') === null) {
+          it.disabled = '';
         } else {
-          targetCollection[i].disabled = '';
-          targetCollection[i].querySelector('input').readOnly = true;
+          it.disabled = '';
+          it.querySelector('input').readOnly = true;
         }
-      }
+      });
     },
 
     disableFormElements: function (targetCollection) {
-      for (var i = 0; i < targetCollection.length; i++) {
-        targetCollection[i].disabled = 'disabled';
-      }
+      targetCollection.forEach(function (it) {
+        it.disabled = 'disabled';
+      });
     },
 
     formContent: document.querySelector('.ad-form'),
@@ -52,16 +52,15 @@
 
     var selectedRoomsValue = optionsCollectionRooms[selectRooms.options.selectedIndex].value;
 
-    for (var i = 0; i < optionsCollectionCapacity.length; i++) {
-
-      if ((selectedRoomsValue === '100' && optionsCollectionCapacity[i].value !== '0') ||
-          (selectedRoomsValue !== '100' && optionsCollectionCapacity[i].value === '0') ||
-          (selectedRoomsValue < optionsCollectionCapacity[i].value)) {
-        optionsCollectionCapacity[i].disabled = 'disabled';
+    optionsCollectionCapacity.forEach(function (it) {
+      if ((selectedRoomsValue === '100' && it.value !== '0') ||
+          (selectedRoomsValue !== '100' && it.value === '0') ||
+          (selectedRoomsValue < it.value)) {
+        it.disabled = 'disabled';
       } else {
-        optionsCollectionCapacity[i].disabled = '';
+        it.disabled = '';
       }
-    }
+    });
   };
 
   var syncRoomsCapacity = function () {
@@ -136,9 +135,9 @@
     var featureItems = filterFeaturesElem.querySelectorAll('input[type="checkbox"]');
 
     var resetFeatures = function (featuresList) {
-      for (var i = 0; i < featuresList.length; i++) {
-        featuresList[i].checked = false;
-      }
+      featuresList.forEach(function (it) {
+        it.checked = false;
+      });
     };
 
     window.globalElements.map.mapArea.classList.add('map--faded');
@@ -190,7 +189,6 @@
 
       selectionField.value = selectionField.querySelector('[selected]').value;
     }
-
   };
 
   // Сброс формы по нажатии .ad-form__reset
