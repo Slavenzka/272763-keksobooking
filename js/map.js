@@ -14,11 +14,13 @@
 
   var limitMapAreaX = function (coordinateX) {
     if (coordinateX < 0) {
-      return coordinateX = 0;
+      coordinateX = 0;
+      return coordinateX;
     }
 
     if (coordinateX > 1135) {
-      return coordinateX = 1135;
+      coordinateX = 1135;
+      return coordinateX;
     }
 
     return coordinateX;
@@ -26,11 +28,13 @@
 
   var limitMapAreaY = function (coordinateY, limit) {
     if (coordinateY < limit.Ymin) {
-      return coordinateY = limit.Ymin;
+      coordinateY = limit.Ymin;
+      return coordinateY;
     }
 
     if (coordinateY > limit.Ymax) {
-      return coordinateY = limit.Ymax;
+      coordinateY = limit.Ymax;
+      return coordinateY;
     }
 
     return coordinateY;
