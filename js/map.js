@@ -12,6 +12,34 @@
     map.insertBefore(fragmentCard, map.querySelector('.map__filters-container'));
   };
 
+  var limitMapAreaX = function (coordinateX) {
+    if (coordinateX < 0) {
+      coordinateX = 0;
+      return coordinateX;
+    }
+
+    if (coordinateX > 1135) {
+      coordinateX = 1135;
+      return coordinateX;
+    }
+
+    return coordinateX;
+  };
+
+  var limitMapAreaY = function (coordinateY, limit) {
+    if (coordinateY < limit.Ymin) {
+      coordinateY = limit.Ymin;
+      return coordinateY;
+    }
+
+    if (coordinateY > limit.Ymax) {
+      coordinateY = limit.Ymax;
+      return coordinateY;
+    }
+
+    return coordinateY;
+  };
+
   //  Активация страницы
 
   var map = window.globalElements.map.mapArea;
@@ -107,25 +135,8 @@
       var actualPositionY = mainPin.offsetTop - shift.y;
       var actualPositionX = mainPin.offsetLeft - shift.x;
 
-      var limitMapArea = function () {
-        if (actualPositionX < 0) {
-          actualPositionX = 0;
-        }
-
-        if (actualPositionX > 1135) {
-          actualPositionX = 1135;
-        }
-
-        if (actualPositionY < limitCoords.Ymin) {
-          actualPositionY = limitCoords.Ymin;
-        }
-
-        if (actualPositionY > limitCoords.Ymax) {
-          actualPositionY = limitCoords.Ymax;
-        }
-      };
-
-      limitMapArea();
+      actualPositionX = limitMapAreaX(actualPositionX);
+      actualPositionY = limitMapAreaY(actualPositionY, limitCoords);
 
       window.pin.updateMainPinCoordinates(actualPositionX, actualPositionY, window.formStatus.addressInput);
 
@@ -133,7 +144,6 @@
         x: actualPositionX,
         y: actualPositionY
       };
-
     };
 
     var onMouseMove = function (moveEvt) {
